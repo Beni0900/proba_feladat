@@ -1,10 +1,16 @@
-<template></template>
+<template>
+  <Button />
+  <div class="container"></div>
+</template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Button from "./components/Button.vue";
 
 export default {
   name: "App",
+  components: {
+    Button,
+  },
 };
 </script>
 
