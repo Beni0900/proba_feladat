@@ -1,6 +1,6 @@
 <template>
-  <Button />
-  <div class="container">
+  <Button @toggleOverlay="toggleOverlay" />
+  <div class="container" v-if="overlayStatus">
     <div class="header" :style="{ backgroundColor: data[randomNumber].color }">
       <p>{{ data[randomNumber].name }}</p>
     </div>
@@ -25,10 +25,11 @@
       >
         <p
           :style="{
-            ...(index === data[randomNumber].talent.length - 1
+            ...(index === data[randomNumber].talent.length - 1 &&
+            item.length >= 15
               ? { textAlign: 'right' }
               : {}),
-            ...(index === 0 ? { textAlign: 'left' } : {}),
+            ...(index === 0 && item.length >= 15 ? { textAlign: 'left' } : {}),
           }"
         >
           {{ item }}
@@ -50,7 +51,8 @@ export default {
   data() {
     return {
       data: data,
-      randomNumber: 1,
+      randomNumber: 0,
+      overlayStatus: true,
     };
   },
   computed: {
@@ -86,6 +88,19 @@ export default {
       const day = date.getDate();
 
       return `${months[monthIndex]} ${day}`;
+    },
+    toggleOverlay() {
+      if (this.overlayStatus) {
+        const randomNumber = this.randomNumber;
+        let currentNumber = randomNumber;
+
+        while (currentNumber === randomNumber) {
+          currentNumber = Math.floor(Math.random() * this.data.length);
+        }
+
+        this.randomNumber = currentNumber;
+      }
+      this.overlayStatus = !this.overlayStatus;
     },
   },
 };

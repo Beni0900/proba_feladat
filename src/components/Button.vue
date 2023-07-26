@@ -1,12 +1,17 @@
 <template>
   <div class="buttonContainer">
-    <button type="button">Overlay</button>
+    <button @click="emitOverlayClick" type="button">Overlay</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Button",
+  methods: {
+    emitOverlayClick() {
+      this.$emit("toggleOverlay");
+    },
+  },
 };
 </script>
 
