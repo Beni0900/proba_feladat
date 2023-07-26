@@ -16,10 +16,21 @@
         :key="index"
         :style="{
           backgroundColor: data[randomNumber].color,
+          ...(index === 0 ? { borderBottomLeftRadius: '15px' } : {}),
+          ...(index === data[randomNumber].talent.length - 1
+            ? { borderBottomRightRadius: '15px' }
+            : {}),
         }"
         class="box"
       >
-        <p>
+        <p
+          :style="{
+            ...(index === data[randomNumber].talent.length - 1
+              ? { textAlign: 'right' }
+              : {}),
+            ...(index === 0 ? { textAlign: 'left' } : {}),
+          }"
+        >
           {{ item }}
         </p>
       </div>
@@ -81,15 +92,23 @@ export default {
 </script>
 
 <style lang="scss">
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
-  width: 800px;
-  height: 300px;
+  border: 4px solid white;
+  border-radius: 20px;
+  width: 790px;
+  height: 290px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 110px 60px 110px;
-  gap: 10px;
-  row-gap: 10px;
-  padding: 10px;
+  grid-template-rows: 110px 50px 110px;
+  gap: 5px;
+  row-gap: 9px;
+  padding: 9px;
   grid-template-areas:
     "header header header"
     "center center center"
@@ -97,16 +116,48 @@ export default {
 
   .header {
     grid-area: header;
+    @include flex-center();
+    border-radius: 15px 15px 0 0;
+    p {
+      font-weight: 700;
+      transform: scaleY(1.3);
+      text-transform: uppercase;
+    }
   }
   .center {
     grid-area: center;
     background-color: white;
+    @include flex-center();
+    p {
+      color: black;
+      text-shadow: none;
+      font-size: 20px;
+      transform: scaleY(1.1);
+    }
   }
   .bottom {
     grid-area: bottom;
     display: grid;
     grid-template-rows: repeat(1, 1fr);
-    gap: 10px;
+    gap: 7px;
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        transform: scaleY(1.2);
+        font-weight: 400;
+      }
+    }
+  }
+  p {
+    width: 70%;
+    text-align: center;
+    margin: 0;
+    color: white;
+    font-size: 30px;
+    text-shadow: 2px 2px 0px #000000;
+    line-height: 25px;
   }
 }
 </style>
